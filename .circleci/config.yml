@@ -21,7 +21,7 @@ jobs:
     resource_class: small
     steps:
       - run: |
-          npm install --global sfdx-cli
+          sudo npm install --global sfdx-cli
       - run: |
           which sfdx && sfdx --version
 workflows:
