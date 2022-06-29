@@ -1,10 +1,10 @@
 version: 2.1
 
 jobs:
-  cli:
+  cli-via-wget:
     docker:
       - image: cimg/python@sha256:8e8157989e01f0b8806211e10014ec1e771f6a5f530ab69a07c52e518011c9ac
-    resource_class: medium
+    resource_class: small
     steps:
       - run: |
           cd /tmp
@@ -15,8 +15,17 @@ jobs:
           echo "export PATH='/tmp/sfdx/bin:$PATH'" >> $BASH_ENV
       - run: |
           which sfdx && sfdx --version
-
+  cli-via-npm:
+    docker:
+      - image: cimg/python@sha256:8e8157989e01f0b8806211e10014ec1e771f6a5f530ab69a07c52e518011c9ac
+    resource_class: small
+    steps:
+      - run: |
+          npm install --global sfdx-cli
+      - run: |
+          which sfdx && sfdx --version
 workflows:
   main:
     jobs:
-      - cli
+      - cli-via-wget
+      - cli-via-npm
